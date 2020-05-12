@@ -1,4 +1,4 @@
-﻿
+﻿@model AquaTools.Models.TankViewModel  
 @{
     ViewData["Title"] = "Volume";
 }
@@ -8,52 +8,57 @@
 
 <body>
     <p class="text-lg-center">Select tank shape:</p>
-    <div class="container mx-auto">
-        <div class="row mx-auto">
-            <div class="d-block text-center mx-auto">
-                <img src="~/images/cubedemo.png" class="mx-auto img-fluid" />
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="tankShape" id="tankShape1" value="option1">
-                    <label class="form-check-label" for="tankShape1">Box</label>
-                </div>
+    <form asp-controller="Home" asp-action="Volume">
+        <div class="container mx-auto">
+            <div class="row mx-auto">
+                <select asp-for="TankType">
+                    <div class="d-block text-center mx-auto">
+                        <img src="~/images/cubedemo.png" class="mx-auto img-fluid" />
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tankShape" id="tankShape1" value="Box">
+                            <label class="form-check-label" for="tankShape1">Box</label>
+                        </div>
+                    </div>
+                    <div class="d-block text-center mx-2">
+                        <img src="~/images/cylinderdemo.png" class="mx-auto img-fluid" />
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tankShape" id="tankShape2" value="Cylinder">
+                            <label class="form-check-label" for="tankShape2">Cylinder</label>
+                        </div>
+                    </div>
+                    <div class="d-block text-center mx-auto">
+                        <img src="~/images/spheredemo.png" class="mx-auto img-fluid" />
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tankShape" id="tankShape3" value="Sphere">
+                            <label class="form-check-label" for="tankShape3">Sphere</label>
+                        </div>
+                    </div>
+                </select>
             </div>
-            <div class="d-block text-center mx-2">
-                <img src="~/images/cylinderdemo.png" class="mx-auto img-fluid" />
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="tankShape" id="tankShape2" value="option2">
-                    <label class="form-check-label" for="tankShape2">Cylinder</label>
-                </div>
-            </div>
-            <div class="d-block text-center mx-auto">
-                <img src="~/images/spheredemo.png" class="mx-auto img-fluid" />
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="tankShape" id="tankShape3" value="option3">
-                    <label class="form-check-label" for="tankShape3">Sphere</label>
-                </div>
+            <div class="text-center" id="dimensionsForm" style="display:none">
+                Enter tank dimensions
+                
+                    <div id="height" style="display:none">
+                        Height:
+                        <input asp-for="Height" class="d-inline" />
+                    </div>
+                    <div id="length" style="display:none">
+                        Length:
+                        <input asp-for="Length" class="d-inline" />
+                    </div>
+                    <div id="width" style="display:none">
+                        Width:
+                        <input asp-for="Width" class="d-inline" />
+                    </div>
+                    <div id="diameter" style="display:none">
+                        Diameter:
+                        <input asp-for="Diameter" class="d-inline" />
+                    </div>
+                    <input type="submit" value="Calculate volume">
+                
             </div>
         </div>
-        <div class="text-center" id="dimensionsForm" style="display:none">
-            Enter tank dimensions
-            <form>
-                <div id="height" style="display:none">
-                    Height: 
-                    <input class="d-inline" />
-                </div>
-                <div id="length" style="display:none">
-                    Length:
-                    <input class="d-inline" />
-                </div>
-                <div id="width" style="display:none">
-                    Width: 
-                    <input class="d-inline" />
-                </div>
-                <div id="diameter" style="display:none">
-                    Diameter:
-                    <input class="d-inline" />
-                </div>
-            </form>
-        </div>
-    </div>
+    </form>
     <script>
         var radio1 = document.getElementById('tankShape1');
         var radio2 = document.getElementById('tankShape2');
