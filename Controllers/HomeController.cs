@@ -33,6 +33,22 @@ namespace AquaTools.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Volume()
+        {
+            TankViewModel tvm = new TankViewModel() { Diameter = 0, Height = 0, Width = 0, Length = 0, TankType = ""};
+            return View(tvm);
+        }
+        [HttpPost]
+        public IActionResult Volume(TankViewModel tank)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("Volume", tank);
+            }
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

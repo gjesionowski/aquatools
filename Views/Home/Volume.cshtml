@@ -1,0 +1,102 @@
+﻿@model AquaTools.Models.TankViewModel  
+@{
+    ViewData["Title"] = "Volume";
+}
+<div class="text-center">
+    <h1 class="display-4">Tank Volume Calulator</h1>
+</div>
+
+<body>
+    <p class="text-lg-center">Select tank shape:</p>
+    <form asp-controller="Home" asp-action="Volume">
+        <div class="container mx-auto">
+            <div class="row mx-auto">
+                <div class="d-block text-center mx-auto">
+                    <img src="~/images/cubedemo.png" class="mx-auto img-fluid" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tankShape" id="Box" value="Box">
+                        <label class="form-check-label" for="tankShape1">Box</label>
+                    </div>
+                </div>
+                <div class="d-block text-center mx-2">
+                    <img src="~/images/cylinderdemo.png" class="mx-auto img-fluid" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tankShape" id="Cylinder" value="Cylinder">
+                        <label class="form-check-label" for="tankShape2">Cylinder</label>
+                    </div>
+                </div>
+                <div class="d-block text-center mx-auto">
+                    <img src="~/images/spheredemo.png" class="mx-auto img-fluid" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tankShape" id="Sphere" value="Sphere">
+                        <label class="form-check-label" for="tankShape3">Sphere</label>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" id="dimensionsForm" style="display:none">
+                <p style="margin-top:15px">Enter tank dimensions:</p>
+                
+                    <div id="height" style="display:none">
+                        Height:
+                        <input asp-for="Height" class="d-inline text-right" style="margin-top:5px" />
+                        in.
+                    </div>
+                    <div id="length" style="display:none">
+                        Length:
+                        <input asp-for="Length" class="d-inline text-right" style="margin-top:5px" />
+                        in.
+                    </div>
+                    <div id="width" style="display:none">
+                        Width:
+                        <input asp-for="Width" class="d-inline text-right" style="margin-top:5px" />
+                        in.
+                    </div>
+                    <div id="diameter" style="display:none">
+                        Diameter:
+                        <input asp-for="Diameter" class="d-inline text-right" style="margin-top:5px"/>
+                        in.
+                    </div>
+                    <input style="margin-top:10px" type="submit" value="Calculate volume">
+            </div>
+        </div>
+    </form>
+    @if (Model.Height > 0 || Model.Diameter > 0)
+    {
+        @:<div id="results">
+              @:<p class="text-center" style="margin-top:15px">Your tank has a volume of @Model.Rounded(Model.Height * Model.Width * Model.Length) inches cubed. That is equal to about @Model.Rounded((Model.Height * Model.Width * Model.Length)/231) gallons.</p>
+        @:</div>
+    }
+    <script>
+        var radio1 = document.getElementById('Box');
+        var radio2 = document.getElementById('Cylinder');
+        var radio3 = document.getElementById('Sphere');
+        var dimensionsDiv = document.getElementById('dimensionsForm');
+
+        var height = document.getElementById('height');
+        var width = document.getElementById('width');
+        var length = document.getElementById('length');
+        var diameter = document.getElementById('diameter');
+
+        radio1.onclick = function () {
+            dimensionsDiv.style['display'] = 'block';
+            diameter.style['display'] = 'none';
+            length.style['display'] = 'block';
+            height.style['display'] = 'block';
+            width.style['display'] = 'block';
+        }
+        radio2.onclick = function () {
+            dimensionsDiv.style['display'] = 'block';
+            diameter.style['display'] = 'block';
+            height.style['display'] = 'block';
+            width.style['display'] = 'none';
+            length.style['display'] = 'none';
+        }
+        radio3.onclick = function () {
+            dimensionsDiv.style['display'] = 'block';
+            diameter.style['display'] = 'block';
+            height.style['display'] = 'none';
+            width.style['display'] = 'none';
+            length.style['display'] = 'none';
+        }
+    </script>
+</body>
