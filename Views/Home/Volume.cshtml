@@ -3,14 +3,15 @@
     ViewData["Title"] = "Volume";
 }
 <div class="text-center">
-    <h1 class="display-4">Tank Volume Calulator</h1>
+    <h1 class="display-4">Tank Volume Calculator</h1>
 </div>
 
 <body>
     <p class="text-lg-center">Select tank shape:</p>
-    <form asp-controller="Home" asp-action="Volume">
+    <form asp-controller="Home" asp-action="Volume" id="tankShapeForm">
         <div class="container mx-auto">
             <div class="row mx-auto">
+
                 <div class="d-block text-center mx-auto">
                     <img src="~/images/cubedemo.png" class="mx-auto img-fluid" />
                     <div class="form-check">
@@ -18,6 +19,7 @@
                         <label class="form-check-label" for="tankShape1">Box</label>
                     </div>
                 </div>
+
                 <div class="d-block text-center mx-2">
                     <img src="~/images/cylinderdemo.png" class="mx-auto img-fluid" />
                     <div class="form-check">
@@ -25,6 +27,7 @@
                         <label class="form-check-label" for="tankShape2">Cylinder</label>
                     </div>
                 </div>
+
                 <div class="d-block text-center mx-auto">
                     <img src="~/images/spheredemo.png" class="mx-auto img-fluid" />
                     <div class="form-check">
@@ -32,71 +35,42 @@
                         <label class="form-check-label" for="tankShape3">Sphere</label>
                     </div>
                 </div>
-            </div>
-            <div class="text-center" id="dimensionsForm" style="display:none">
-                <p style="margin-top:15px">Enter tank dimensions:</p>
-                
-                    <div id="height" style="display:none">
-                        Height:
-                        <input asp-for="Height" class="d-inline text-right" style="margin-top:5px" />
-                        in.
-                    </div>
-                    <div id="length" style="display:none">
-                        Length:
-                        <input asp-for="Length" class="d-inline text-right" style="margin-top:5px" />
-                        in.
-                    </div>
-                    <div id="width" style="display:none">
-                        Width:
-                        <input asp-for="Width" class="d-inline text-right" style="margin-top:5px" />
-                        in.
-                    </div>
-                    <div id="diameter" style="display:none">
-                        Diameter:
-                        <input asp-for="Diameter" class="d-inline text-right" style="margin-top:5px"/>
-                        in.
-                    </div>
-                    <input style="margin-top:10px" type="submit" value="Calculate volume">
+
             </div>
         </div>
+        <div class="text-center">
+            <button type="submit" id="restart" class="btn btn-secondary" asp-action="Volume" >Start Over</button>
+            <button type="submit" id="submit" class="btn btn-info" on-click="updateType(@Model)" asp-action="Volume">Continue</button>
+        </div>
     </form>
-    @if (Model.Height > 0 || Model.Diameter > 0)
-    {
-        @:<div id="results">
-              @:<p class="text-center" style="margin-top:15px">Your tank has a volume of @Model.Rounded(Model.Height * Model.Width * Model.Length) inches cubed. That is equal to about @Model.Rounded((Model.Height * Model.Width * Model.Length)/231) gallons.</p>
-        @:</div>
-    }
     <script>
-        var radio1 = document.getElementById('Box');
-        var radio2 = document.getElementById('Cylinder');
-        var radio3 = document.getElementById('Sphere');
-        var dimensionsDiv = document.getElementById('dimensionsForm');
 
-        var height = document.getElementById('height');
-        var width = document.getElementById('width');
-        var length = document.getElementById('length');
-        var diameter = document.getElementById('diameter');
+        function getRadioVal(form, name) {
+            var val;
+            // get list of radio buttons with specified name
+            var radios = form.elements[name];
+    
+            // loop through list of radio buttons
+            for (var i=0, len=radios.length; i<len; i++) {
+                if ( radios[i].checked ) { // radio checked?
+                    val = radios[i].value; // if so, hold its value in val
+                    break; // and break out of for loop
+                }
+            }
+            return val; // return value of checked radio or undefined if none checked
+        }
 
-        radio1.onclick = function () {
-            dimensionsDiv.style['display'] = 'block';
-            diameter.style['display'] = 'none';
-            length.style['display'] = 'block';
-            height.style['display'] = 'block';
-            width.style['display'] = 'block';
+        // May need this for checking radio button value for passing to next view
+        document.getElementById('tankShapeForm').onsubmit = function() {
+
+            // 'tankShape' is name of radio button group, this refers to the form
+            var val = getRadioVal(this, 'tankShape');
+            
+            // display value obtained
+            alert(val);
+
+            location.href('@Url.Action("Volume", "Home")');
         }
-        radio2.onclick = function () {
-            dimensionsDiv.style['display'] = 'block';
-            diameter.style['display'] = 'block';
-            height.style['display'] = 'block';
-            width.style['display'] = 'none';
-            length.style['display'] = 'none';
-        }
-        radio3.onclick = function () {
-            dimensionsDiv.style['display'] = 'block';
-            diameter.style['display'] = 'block';
-            height.style['display'] = 'none';
-            width.style['display'] = 'none';
-            length.style['display'] = 'none';
-        }
+
     </script>
 </body>

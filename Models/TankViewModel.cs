@@ -9,13 +9,9 @@ namespace AquaTools.Models
 {
     public class TankViewModel
     {
-        public double Height { get; set; }
-        public double Width { get; set; }
-        public double Length { get; set; }
-        public double Diameter { get; set; }
-        [BindProperty]
+        [Required]
         public string TankType { get; set; }
-        public string[] TankTypes = new[] {"Box", "Cylinder", "Sphere"};
+        public string[] TankTypes = new[] { "Box", "Cylinder", "Sphere" };
 
         public double Rounded(double input)
         {
@@ -23,12 +19,5 @@ namespace AquaTools.Models
             rounded = Math.Round(input);
             return rounded;
         }
-
-        public double GetVolumeBox(double width, double height, double length)
-        {
-            double volume = width * length * height;
-            return this.Rounded(volume);
-        }
     }
-
 }
