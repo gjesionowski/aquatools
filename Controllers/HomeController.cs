@@ -36,9 +36,9 @@ namespace AquaTools.Controllers
         [HttpGet]
         public IActionResult Volume()
         {
-            TankViewModel tvm = new TankViewModel() { Diameter = 0, Height = 0, Width = 0, Length = 0, TankType = ""};
-            return View(tvm);
+            return View();
         }
+
         [HttpPost]
         public IActionResult Volume(TankViewModel tank)
         {
@@ -46,6 +46,7 @@ namespace AquaTools.Controllers
             {
                 return View("Volume", tank);
             }
+
             return View();
         }
 
