@@ -1,0 +1,76 @@
+﻿@model AquaTools.Models.TankViewModel  
+@{
+    ViewData["Title"] = "Volume";
+}
+<div class="text-center">
+    <h1 class="display-4">Tank Volume Calculator</h1>
+</div>
+
+<body>
+    <p class="text-lg-center">Select tank shape:</p>
+    <form asp-controller="Home" asp-action="Volume" id="tankShapeForm">
+        <div class="container mx-auto">
+            <div class="row mx-auto">
+
+                <div class="d-block text-center mx-auto">
+                    <img src="~/images/cubedemo.png" class="mx-auto img-fluid" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tankShape" id="Box" value="Box">
+                        <label class="form-check-label" for="tankShape1">Box</label>
+                    </div>
+                </div>
+
+                <div class="d-block text-center mx-2">
+                    <img src="~/images/cylinderdemo.png" class="mx-auto img-fluid" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tankShape" id="Cylinder" value="Cylinder">
+                        <label class="form-check-label" for="tankShape2">Cylinder</label>
+                    </div>
+                </div>
+
+                <div class="d-block text-center mx-auto">
+                    <img src="~/images/spheredemo.png" class="mx-auto img-fluid" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tankShape" id="Sphere" value="Sphere">
+                        <label class="form-check-label" for="tankShape3">Sphere</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" id="restart" class="btn btn-secondary" asp-action="Volume" >Start Over</button>
+            <button type="submit" id="submit" class="btn btn-info" on-click="updateType(@Model)" asp-action="Volume">Continue</button>
+        </div>
+    </form>
+    <script>
+
+        function getRadioVal(form, name) {
+            var val;
+            // get list of radio buttons with specified name
+            var radios = form.elements[name];
+    
+            // loop through list of radio buttons
+            for (var i=0, len=radios.length; i<len; i++) {
+                if ( radios[i].checked ) { // radio checked?
+                    val = radios[i].value; // if so, hold its value in val
+                    break; // and break out of for loop
+                }
+            }
+            return val; // return value of checked radio or undefined if none checked
+        }
+
+        // May need this for checking radio button value for passing to next view
+        document.getElementById('tankShapeForm').onsubmit = function() {
+
+            // 'tankShape' is name of radio button group, this refers to the form
+            var val = getRadioVal(this, 'tankShape');
+            
+            // display value obtained
+            alert(val);
+
+            location.href('@Url.Action("Volume", "Home")');
+        }
+
+    </script>
+</body>
